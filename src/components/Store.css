@@ -1,0 +1,110 @@
+.store {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.store__card {
+  background: var(--bg-card);
+  border: 3px solid var(--border);
+  padding: 2rem;
+  max-width: 640px;
+  margin: 0 auto;
+  box-shadow: 6px 6px 0 var(--bg-deep);
+}
+
+.store__title {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-pixel-head);
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.store__sub {
+  color: var(--text-muted);
+  font-family: var(--font-pixel-body);
+  font-size: 1.1rem;
+  margin: 0 0 1.25rem;
+}
+
+.store__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.store__filter {
+  padding: 0.5rem 0.85rem;
+  border: 3px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.store__filter:hover {
+  color: var(--text);
+}
+
+.store__filter.active {
+  background: var(--pink-orchid-3);
+  border-color: var(--pink-orchid);
+  color: var(--bg-deepest);
+  box-shadow: 3px 3px 0 var(--bg-deepest);
+}
+
+.store__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.store__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 3px solid var(--border);
+  background: var(--bg-elevated);
+  box-shadow: 2px 2px 0 var(--bg-deep);
+}
+
+.store__item-box {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-deep);
+  border: 2px dashed var(--text-muted);
+  /* Placeholder for design asset */
+}
+
+.store__item-label {
+  font-family: var(--font-pixel-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.store__item-cost {
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
+  color: var(--pink-orchid);
+}
+
+.store__hint {
+  margin: 1rem 0 0;
+  font-family: var(--font-pixel-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.store__sparkle {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1rem;
+  color: var(--gold);
+  text-shadow: 0 0 8px var(--gold-glow);
+  opacity: 0.8;
+}

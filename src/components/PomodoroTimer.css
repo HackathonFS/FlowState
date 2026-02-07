@@ -1,0 +1,132 @@
+.pomodoro {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.pomodoro__card {
+  background: var(--bg-card);
+  border: 3px solid var(--border);
+  padding: 2rem;
+  max-width: 420px;
+  margin: 0 auto;
+  box-shadow: 6px 6px 0 var(--dusty-grape);
+}
+
+.pomodoro__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.pomodoro__tab {
+  flex: 1;
+  padding: 0.6rem;
+  border: 3px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.pomodoro__tab:hover {
+  color: var(--text);
+}
+
+.pomodoro__tab.active {
+  background: var(--pink-orchid-3);
+  border-color: var(--pink-orchid);
+  color: var(--dusty-grape);
+  box-shadow: 3px 3px 0 var(--dusty-grape);
+}
+
+.pomodoro__label {
+  text-align: center;
+  color: var(--text-muted);
+  font-family: var(--font-pixel-body);
+  font-size: 1.15rem;
+  margin: 0 0 1.5rem;
+}
+
+.pomodoro__ring {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 1.5rem;
+  border: 4px solid var(--lilac);
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) calc(var(--progress) * 360deg), var(--bg-elevated) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 8px 8px 0 var(--dusty-grape);
+}
+
+.pomodoro__ring::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 3px solid var(--bg-card);
+  background: var(--bg-card);
+  border-radius: 50%;
+}
+
+.pomodoro__time {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-pixel-body);
+  font-size: 2.75rem;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.pomodoro__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.pomodoro__btn {
+  padding: 0.75rem 1.5rem;
+  border: 3px solid var(--border);
+  font-family: var(--font-pixel-body);
+  font-size: 1.15rem;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.pomodoro__btn.primary {
+  background: var(--pink-orchid-3);
+  color: var(--dusty-grape);
+  border-color: var(--pink-orchid);
+  box-shadow: 4px 4px 0 var(--dusty-grape);
+}
+
+.pomodoro__btn.primary:hover {
+  box-shadow: 2px 2px 0 var(--dusty-grape);
+  transform: translate(2px, 2px);
+}
+
+.pomodoro__btn.secondary {
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
+.pomodoro__btn:hover {
+  transform: translate(1px, 1px);
+}
+
+.pomodoro__hint,
+.pomodoro__sessions {
+  text-align: center;
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.pomodoro__sessions {
+  margin-top: 0.25rem;
+  color: var(--pink-orchid);
+}

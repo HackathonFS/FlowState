@@ -1,0 +1,245 @@
+/* User palette: lighter pinks, darker purples, starker contrast + gold accents */
+:root {
+  --pink-orchid: #F5D4F0;
+  --pink-orchid-2: #EFC6E8;
+  --pink-orchid-3: #E5B5D2;
+  --lilac: #D19DC2;
+  --vintage-lavender: #9265A3;
+  --vintage-lavender-2: #7a4d8a;
+  --dusty-grape: #62488A;
+  --bg-deep: #3d2d5c;
+  --bg-deepest: #2d2045;
+  --bg-card: #5a3d6e;
+  --bg-elevated: #6b4a7e;
+  --accent: #E3A9C9;
+  --accent-mid: #E5B5D2;
+  --accent-soft: #D19DC2;
+  --accent-end: #9265A3;
+  --accent-glow: rgba(227, 169, 201, 0.45);
+  --accent-glow-subtle: rgba(209, 157, 194, 0.3);
+  --gradient-main: linear-gradient(135deg, #F5D4F0 0%, #EFC6E8 30%, #E5B5D2 60%, #D19DC2 85%, #9265A3 100%);
+  --gold: #ECCA4F;
+  --gold-glow: rgba(236, 202, 79, 0.5);
+  --crown: #EFC6E8;
+  --text: #F5D4F0;
+  --text-muted: #D19DC2;
+  --border: rgba(209, 157, 194, 0.45);
+  --font-pixel-head: 'Pixelify Sans', sans-serif;
+  --font-pixel-body: 'VT323', monospace;
+  --radius: 0;
+  --radius-sm: 0;
+  --pixel: 4px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font-pixel-body);
+  font-size: 1.15rem;
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Pixel grid background */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-image:
+    linear-gradient(rgba(239, 198, 232, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 198, 232, 0.03) 1px, transparent 1px);
+  background-size: var(--pixel) var(--pixel);
+}
+
+.orb {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: var(--lilac);
+  opacity: 0.5;
+  image-rendering: pixelated;
+}
+
+.orb-1 {
+  top: -40px;
+  right: 10%;
+  background: var(--pink-orchid-3);
+}
+
+.orb-2 {
+  bottom: 10%;
+  left: 5%;
+  background: var(--lilac);
+}
+
+.orb-3 {
+  top: 45%;
+  left: 25%;
+  width: 80px;
+  height: 80px;
+  background: var(--pink-orchid-2);
+  opacity: 0.4;
+}
+
+button {
+  font-family: var(--font-pixel-body);
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: var(--font-pixel-body);
+}
+
+/* Header — pixel style */
+.header {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  border-bottom: 3px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: 4px 4px 0 var(--dusty-grape);
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__logo-img {
+  height: 42px;
+  width: auto;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.header__logo-fallback {
+  display: none;
+  font-family: var(--font-pixel-head);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header__logo-fallback--show {
+  display: block;
+}
+
+.header__tagline {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-family: var(--font-pixel-body);
+}
+
+.header__points {
+  margin-left: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.45rem 0.9rem;
+  border: 3px solid var(--border);
+  background: var(--bg-elevated);
+  box-shadow: 3px 3px 0 var(--bg-deepest);
+}
+
+.header__points-label::before {
+  content: '✦';
+  margin-right: 0.25rem;
+  color: var(--gold);
+  font-size: 0.75rem;
+  text-shadow: 0 0 6px var(--gold-glow);
+}
+
+.header__points-value {
+  font-family: var(--font-pixel-body);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--pink-orchid);
+}
+
+.header__points-label {
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Nav — pixel blocks */
+.nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 3px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: 0 4px 0 var(--bg-deepest);
+  overflow-x: auto;
+}
+
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: 3px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-family: var(--font-pixel-body);
+  font-size: 1.15rem;
+  white-space: nowrap;
+  transition: color 0.2s, background 0.2s, transform 0.1s;
+  box-shadow: 3px 3px 0 var(--dusty-grape);
+}
+
+.nav__item:hover {
+  color: var(--text);
+  background: var(--lilac);
+}
+
+.nav__item.active {
+  background: var(--pink-orchid-3);
+  border-color: var(--pink-orchid);
+  color: var(--bg-deepest);
+  box-shadow: 3px 3px 0 var(--bg-deepest);
+}
+
+.nav__item.active .nav__icon {
+  filter: drop-shadow(0 0 4px var(--gold-glow));
+}
+
+.nav__icon {
+  font-size: 1.2rem;
+}
+
+/* Main content */
+.main {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 2rem;
+}
