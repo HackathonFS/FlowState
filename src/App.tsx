@@ -27,7 +27,7 @@ function AppContent() {
     { id: 'checklist', label: 'Tasks', icon: '✓' },
     { id: 'studycall', label: 'Study call', icon: '[ ◉¯]' },
     { id: 'store', label: 'Store', icon: '$' },
-    { id: 'leaderboard', label: 'Leaderboard', icon: '˗ˏˋ ★ ˎˊ˗' },
+    { id: 'leaderboard', label: 'Leaderboard', icon: '★' },
     { id: 'character', label: 'Character', icon: 'ᝰ.ᐟ' },
   ]
 
