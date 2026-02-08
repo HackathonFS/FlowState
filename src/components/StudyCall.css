@@ -1,89 +1,70 @@
-/* src/components/StudyCall.css */
+.study-call {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
 
-/* --- LAYOUTS --- */
-.study-content {
-  display: flex;
-  width: 100%;
-  height: 100%;
+.study-call__card {
+  background: var(--bg-card);
+  border: 3px solid var(--border);
+  padding: 2rem;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 6px 6px 0 var(--dusty-grape);
+}
+
+.study-call__title {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-pixel-head);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.study-call__join {
+  padding: 0.75rem 1.5rem;  
+  border: 3px solid var(--pink-orchid);
+  background: var(--pink-orchid-3);
+  color: var(--dusty-grape);
+  font-family: var(--font-pixel-body);
+  font-size: 1.15rem;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 4px 4px 0 var(--dusty-grape);
+}
+
+.study-call__join:hover {
+  box-shadow: 2px 2px 0 var(--dusty-grape);
+  transform: translate(2px, 2px);
+}
+
+.study-call--active {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .study-video-grid {
-  flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-auto-rows: minmax(200px, 1fr); /* Ensure rows have height */
   gap: 1rem;
-  padding: 1rem;
-  overflow-y: auto;
-  transition: all 0.3s ease;
 }
 
-/* --- SPLIT MODE (Active Embed) --- */
-.study-content--split .study-embed-window {
-  flex: 3; /* Website takes 75% width */
-  border-right: 2px solid var(--border);
-  background: white;
-}
-
-.study-content--split .study-video-grid {
-  flex: 1; /* Videos take 25% width */
-  grid-template-columns: 1fr; /* Force single column stack */
-  grid-auto-rows: 200px;
-}
-
-/* --- IFRAME STYLING --- */
-.study-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* --- TOOL BUTTONS --- */
-.study-tools-menu {
-  margin-top: 1rem;
-  border-top: 2px dashed var(--border);
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.tool-btn {
-  background: var(--bg-deepest);
-  border: 2px solid var(--border);
-  color: var(--text-main);
-  padding: 0.5rem;
-  text-align: left;
-  cursor: pointer;
-  font-family: var(--font-pixel-body);
-  transition: all 0.2s;
-}
-
-.tool-btn:hover {
-  border-color: var(--pink-orchid);
-}
-
-.tool-btn.active {
-  background: var(--pink-orchid);
-  color: var(--bg-deepest);
-}
-
-/* --- VIDEO TILES --- */
 .video-tile {
   position: relative;
   width: 100%;
-  height: 100%; /* Fill the grid cell */
-  min-height: 100%; /* Force height */
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
   background: #2d2045;
   border: 3px solid var(--border);
   overflow: hidden;
 }
 
 .video-tile video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block; /* Removes bottom space */
 }
 
 .video-tile__name {
@@ -94,4 +75,14 @@
   padding: 2px 6px;
   color: white;
   font-size: 0.8rem;
+}
+
+.study-call__leave {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
 }
