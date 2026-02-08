@@ -25,10 +25,10 @@ function AppContent() {
     { id: 'home', label: 'Home', icon: '⌂' },
     { id: 'pomodoro', label: 'Timer', icon: '⏱' },
     { id: 'checklist', label: 'Tasks', icon: '✓' },
-    { id: 'studycall', label: 'Study call', icon: '📹' },
-    { id: 'store', label: 'Store', icon: '🛒' },
-    { id: 'leaderboard', label: 'Leaderboard', icon: '🏆' },
-    { id: 'character', label: 'Character', icon: '✨' },
+    { id: 'studycall', label: 'Study call', icon: '[ ◉¯]' },
+    { id: 'store', label: 'Store', icon: '$' },
+    { id: 'leaderboard', label: 'Leaderboard', icon: '˗ˏˋ ★ ˎˊ˗' },
+    { id: 'character', label: 'Character', icon: 'ᝰ.ᐟ' },
   ]
 
   const navigate = (tabId: TabId) => {
