@@ -76,8 +76,50 @@
   width: 80px;
   height: 80px;
   background: var(--bg-deep);
-  border: 2px dashed var(--text-muted);
-  /* Placeholder for design asset */
+  border: 2px solid var(--border);
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.store__item-char {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.store__btn {
+  padding: 0.4rem 0.75rem;
+  border: 3px solid var(--border);
+  background: var(--pink-orchid-3);
+  color: var(--bg-deepest);
+  font-family: var(--font-pixel-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 2px 2px 0 var(--dusty-grape);
+}
+
+.store__btn:hover:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--dusty-grape);
+}
+
+.store__btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+
+.store__empty {
+  margin: 1rem 0 0;
+  font-family: var(--font-pixel-body);
+  font-size: 1rem;
+  color: var(--text-muted);
 }
 
 .store__item-label {

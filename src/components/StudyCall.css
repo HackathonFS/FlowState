@@ -43,6 +43,22 @@
   width: 100%;
 }
 
+.study-call__category-label {
+  margin: 0;
+  font-family: var(--font-pixel-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.study-call__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .study-call__divider {
   height: 2px;
   background: var(--border);

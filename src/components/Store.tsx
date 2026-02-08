@@ -1,35 +1,51 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { usePoints } from '../context/PointsContext'
+import { CHARACTERS, ACCESSORIES, NAMETAGS } from '../constants/items'
+import { CharacterDisplay } from './CharacterDisplay'
 import './Store.css'
 
 type StoreCategory = 'all' | 'nametags' | 'accessories' | 'characters'
 
-const PLACEHOLDER_ITEMS = [
-  { id: 'n1', category: 'nametags' as const, label: 'Nametag', cost: 0 },
-  { id: 'n2', category: 'nametags' as const, label: 'Nametag', cost: 200 },
-  { id: 'n3', category: 'nametags' as const, label: 'Nametag', cost: 500 },
-  { id: 'a1', category: 'accessories' as const, label: 'Accessory', cost: 50 },
-  { id: 'a2', category: 'accessories' as const, label: 'Accessory', cost: 30 },
-  { id: 'a3', category: 'accessories' as const, label: 'Accessory', cost: 40 },
-  { id: 'a4', category: 'accessories' as const, label: 'Accessory', cost: 80 },
-  { id: 'a5', category: 'accessories' as const, label: 'Accessory', cost: 100 },
-  { id: 'c1', category: 'characters' as const, label: 'Character', cost: 0 },
-  { id: 'c2', category: 'characters' as const, label: 'Character', cost: 150 },
-  { id: 'c3', category: 'characters' as const, label: 'Character', cost: 200 },
-]
-
 export function Store() {
+  const { profile, unlockItem } = usePoints()
   const [category, setCategory] = useState<StoreCategory>('all')
+
+  const nametagItems = NAMETAGS.filter((item) => item.cost > 0 && !profile.unlockedNametags.includes(item.id))
+  const accessoryItems = ACCESSORIES.filter((item) => !profile.ownedAccessories.includes(item.id))
+  const characterItems = CHARACTERS.filter(
+    (item) => item.cost > 0 && !profile.unlockedCharacters.includes(item.id)
+  )
+
+  const allItems = [
+    ...nametagItems.map((item) => ({ ...item, type: 'nametag' as const })),
+    ...accessoryItems.map((item) => ({ ...item, type: 'accessory' as const })),
+    ...characterItems.map((item) => ({ ...item, type: 'character' as const })),
+  ]
 
   const filtered =
     category === 'all'
-      ? PLACEHOLDER_ITEMS
-      : PLACEHOLDER_ITEMS.filter((i) => i.category === category)
+      ? allItems
+      : category === 'nametags'
+        ? allItems.filter((i) => i.type === 'nametag')
+        : category === 'accessories'
+          ? allItems.filter((i) => i.type === 'accessory')
+          : allItems.filter((i) => i.type === 'character')
+
+  const handleBuy = (item: (typeof allItems)[number]) => {
+    if (item.type === 'nametag' && 'style' in item) {
+      unlockItem(item.id, item.cost, 'nametag')
+    } else if (item.type === 'accessory' && 'image' in item) {
+      unlockItem(item.id, item.cost, 'accessory')
+    } else if (item.type === 'character' && 'image' in item) {
+      unlockItem(item.id, item.cost, 'character')
+    }
+  }
 
   return (
     <div className="store">
       <div className="store__card">
         <h2 className="store__title">Store</h2>
-        <p className="store__sub">Customize your character. Placeholder boxes for designs.</p>
+        <p className="store__sub">Buy items here — they will appear in the Character tab for you to equip.</p>
         <div className="store__filters">
           {(['all', 'nametags', 'accessories', 'characters'] as const).map((c) => (
             <button
@@ -42,17 +58,73 @@ export function Store() {
           ))}
         </div>
         <div className="store__grid">
-          {filtered.map((item) => (
-            <div key={item.id} className="store__item">
-              <div className="store__item-box">
-                {/* Placeholder for design asset */}
+          {filtered.map((item) => {
+            const canBuy = profile.points >= item.cost
+            if (item.type === 'nametag') {
+              return (
+                <div key={`n-${item.id}`} className="store__item">
+                  <span className={`nametag nametag--${item.style}`}>
+                    {item.style === 'crown' && <span className="nametag__icon">👑</span>}
+                    {item.name}
+                  </span>
+                  <span className="store__item-cost">{item.cost} pts</span>
+                  <button
+                    className="store__btn"
+                    disabled={!canBuy}
+                    onClick={() => handleBuy(item)}
+                  >
+                    {canBuy ? 'Buy' : 'Need more pts'}
+                  </button>
+                </div>
+              )
+            }
+            if (item.type === 'accessory') {
+              return (
+                <div key={`a-${item.id}`} className="store__item">
+                  <div
+                    className="store__item-box"
+                    style={{ backgroundImage: `url(${item.image})` }}
+                  />
+                  <span className="store__item-label">{item.name}</span>
+                  <span className="store__item-cost">{item.cost} pts</span>
+                  <button
+                    className="store__btn"
+                    disabled={!canBuy}
+                    onClick={() => handleBuy(item)}
+                  >
+                    {canBuy ? 'Buy' : 'Need more pts'}
+                  </button>
+                </div>
+              )
+            }
+            return (
+              <div key={`c-${item.id}`} className="store__item">
+                <div className="store__item-char">
+                  <CharacterDisplay
+                    characterId={item.id}
+                    equippedAccessories={[]}
+                    scale={0.75}
+                  />
+                </div>
+                <span className="store__item-label">{item.name}</span>
+                <span className="store__item-cost">{item.cost} pts</span>
+                <button
+                  className="store__btn"
+                  disabled={!canBuy}
+                  onClick={() => handleBuy(item)}
+                >
+                  {canBuy ? 'Buy' : 'Need more pts'}
+                </button>
               </div>
-              <span className="store__item-label">{item.label}</span>
-              <span className="store__item-cost">{item.cost === 0 ? 'Free' : `${item.cost} pts`}</span>
-            </div>
-          ))}
+            )
+          })}
         </div>
-        <p className="store__hint">Buy & equip from the Character tab.</p>
+        {allItems.length === 0 && (
+          <p className="store__empty">You own everything! Equip items in the Character tab.</p>
+        )}
+        {allItems.length > 0 && (
+          <p className="store__hint">After buying, equip from the Character tab.</p>
+        )}
       </div>
       <span className="store__sparkle">✦</span>
     </div>

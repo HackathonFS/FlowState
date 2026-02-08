@@ -85,34 +85,34 @@ export function StudyCall() {
       {view === 'menu' && (
         <div className="study-call__card">
           <h2 className="study-call__title">Study Together</h2>
-          <p className="study-call__desc">Select a category to join a pod</p>
+          <p className="study-call__desc">Select a meeting category to join a pod</p>
           
           <div className="study-call__menu">
-            {/* Main Categories */}
-            <button className="study-call__btn primary" onClick={handleCommunity}>
-              👥 Study as a Community
-            </button>
-            <button className="study-call__btn" onClick={handleIndependent}>
-              🤫 Independent Study (Silent)
-            </button>
-            <button className="study-call__btn" onClick={handleSubject}>
-              📚 Specific Subject...
-            </button>
-            <button className="study-call__btn" onClick={handleTask}>
-              ⚡ Similar Tasks...
-            </button>
+            <p className="study-call__category-label">Meeting categories</p>
+            <div className="study-call__categories">
+              <button className="study-call__btn primary" onClick={handleCommunity}>
+                👥 Study as a Community
+              </button>
+              <button className="study-call__btn" onClick={handleIndependent}>
+                🤫 Independent Study (Silent)
+              </button>
+              <button className="study-call__btn" onClick={handleSubject}>
+                📚 Specific Subject...
+              </button>
+              <button className="study-call__btn" onClick={handleTask}>
+                ⚡ Similar Tasks...
+              </button>
+            </div>
 
-            {/* Divider */}
             <div className="study-call__divider" />
-            
-            {/* Utilities */}
+            <p className="study-call__category-label">More options</p>
             <div className="study-call__actions">
-                <button className="study-call__btn small" onClick={handleCreateNew}>
+              <button className="study-call__btn small" onClick={handleCreateNew}>
                 + Create New
-                </button>
-                <button className="study-call__btn small" onClick={handleJoinViaLink}>
+              </button>
+              <button className="study-call__btn small" onClick={handleJoinViaLink}>
                 🔗 Join Link
-                </button>
+              </button>
             </div>
           </div>
         </div>

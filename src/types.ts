@@ -32,6 +32,7 @@ export interface LeaderboardEntry {
   rank: number
   nametagStyle: NametagStyle
   characterId: CharacterId
+  equippedAccessories: AccessoryId[]
 }
 
 export interface Community {

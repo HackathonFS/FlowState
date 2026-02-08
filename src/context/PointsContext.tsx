@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useCallback, useMemo, useState, useEffect } from 'react'
-import type { Task, UserProfile, NametagStyle, Community } from '../types'
+import type { Task, UserProfile, NametagStyle } from '../types'
 
 const STORAGE_KEY = 'flow-state-data'
 

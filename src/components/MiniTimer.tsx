@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTimer } from '../context/TimerContext'
 import './MiniTimer.css'
 

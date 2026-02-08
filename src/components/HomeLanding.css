@@ -43,12 +43,97 @@
   gap: 1.5rem;
 }
 
+.landing__content--home {
+  position: absolute;
+  top: 72%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .landing__tagline {
   margin: 0;
   font-family: var(--font-pixel-head);
   font-size: 1.5rem;
   color: var(--text);
   text-shadow: 0 0 20px var(--gold-glow);
+}
+
+.landing__instructions {
+  max-width: 420px;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 var(--dusty-grape);
+}
+
+.landing__inst-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-pixel-head);
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+.landing__inst-body {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-pixel-body);
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.landing__inst-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.landing__btn {
+  padding: 0.5rem 1.25rem;
+  border: 3px solid var(--border);
+  font-family: var(--font-pixel-body);
+  font-size: 1.1rem;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.landing__btn.primary {
+  background: var(--pink-orchid-3);
+  color: var(--bg-deepest);
+  border-color: var(--pink-orchid);
+  box-shadow: 3px 3px 0 var(--bg-deepest);
+}
+
+.landing__btn.primary:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--bg-deepest);
+}
+
+.landing__btn.secondary {
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
+.landing__btn.secondary:hover {
+  color: var(--text);
+  background: var(--lilac);
+}
+
+.landing__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.landing__dot {
+  width: 8px;
+  height: 8px;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+}
+
+.landing__dot.active {
+  background: var(--pink-orchid);
+  border-color: var(--pink-orchid);
 }
 
 .landing__cta {
@@ -61,6 +146,10 @@
   box-shadow: 4px 4px 0 var(--bg-deepest);
   transition: transform 0.1s, box-shadow 0.1s;
   margin-top: 280%;
+}
+
+.landing__explore {
+  margin-top: 0;
 }
 
 .landing__cta:hover {

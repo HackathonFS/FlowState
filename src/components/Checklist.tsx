@@ -4,7 +4,7 @@ import type { Task } from '../types'
 import './Checklist.css'
 
 export function Checklist() {
-  const { profile, tasks, addTask, toggleTask, deleteTask } = usePoints()
+  const { tasks, addTask, toggleTask, deleteTask } = usePoints()
   const [title, setTitle] = useState('')
   const [points, setPoints] = useState(5)
 

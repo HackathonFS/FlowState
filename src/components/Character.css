@@ -40,23 +40,31 @@
   box-shadow: 4px 4px 0 var(--dusty-grape);
 }
 
-.character__avatar {
-  position: relative;
-  font-size: 4rem;
-  line-height: 1;
-}
-
-.character__accessories {
-  position: absolute;
-  bottom: -4px;
-  right: -8px;
+.character__avatar-wrap {
   display: flex;
-  gap: 2px;
-  font-size: 1.25rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.character__acc {
-  display: block;
+.character__avatar-display {
+  flex-shrink: 0;
+}
+
+.character__item-thumb {
+  width: 48px;
+  height: 48px;
+  background-size: 48px 48px;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.character__item-char {
+  flex-shrink: 0;
 }
 
 .character__name-label {

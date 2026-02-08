@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { PointsProvider, usePoints } from './context/PointsContext'
 import { TimerProvider } from './context/TimerContext' // Import new provider
 import { HomeLanding } from './components/HomeLanding'
@@ -129,7 +129,9 @@ function AppContent() {
       </aside>
 
       <main className="main">
-        {activeTab === 'home' && <HomeLanding onEnter={() => navigate('pomodoro')} />}
+        {activeTab === 'home' && (
+          <HomeLanding onOpenSidebar={() => setSidebarOpen(true)} />
+        )}
         {activeTab === 'pomodoro' && <PomodoroTimer />}
         {activeTab === 'checklist' && <Checklist />}
         {activeTab === 'studycall' && <StudyCall />}
