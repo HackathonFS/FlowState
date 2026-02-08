@@ -37,6 +37,25 @@
   z-index: 90;
   display: none;
 }
+.mini-player__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.mini-player__time {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  min-width: 40px;
+  text-align: center;
+}
+
+.mini-player__scrub {
+  flex: 1;
+  accent-color: var(--text);
+}
+
 
 .mini-player.show {
   display: block;
@@ -120,3 +139,16 @@
     bottom: 10px;
   }
 }
+.mini-player__select,
+.mini-player__select option {
+  font-family: 'VT323', monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+}
+.mini-player__select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+}
+

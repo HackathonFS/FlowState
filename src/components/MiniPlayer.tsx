@@ -15,6 +15,9 @@ export function MiniPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [expanded, setExpanded] = useState(false)
   const [playing, setPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+
 
   const [trackSrc, setTrackSrc] = useState<string>(() => {
     return localStorage.getItem('flowstate_track') ?? tracks[0].src
@@ -51,6 +54,13 @@ export function MiniPlayer() {
       a.removeEventListener('pause', onPause)
     }
   }, [])
+
+  const seekTo = (t: number) => {
+  const a = audioRef.current
+  if (!a) return
+  a.currentTime = t
+  setCurrentTime(t)
+}
 
   const toggle = async () => {
     const a = audioRef.current
@@ -96,10 +106,35 @@ export function MiniPlayer() {
     }, 0)
   }
 
+  const fmt = (s: number) => {
+  if (!Number.isFinite(s) || s < 0) return '0:00'
+  const m = Math.floor(s / 60)
+  const sec = Math.floor(s % 60)
+  return `${m}:${sec.toString().padStart(2, '0')}`
+}
+
+
+
   return (
     <>
       {/* Always mounted so audio persists */}
-      <audio ref={audioRef} src={trackSrc} loop preload="auto" />
+      <audio
+  ref={audioRef}
+  src={trackSrc}
+  loop
+  preload="auto"
+  onLoadedMetadata={() => {
+    const a = audioRef.current
+    if (!a) return
+    setDuration(a.duration || 0)
+  }}
+  onTimeUpdate={() => {
+    const a = audioRef.current
+    if (!a) return
+    setCurrentTime(a.currentTime || 0)
+  }}
+  onEnded={() => setPlaying(false)}
+/>
 
       {/* MINI bubble (always visible) */}
       <button
@@ -109,21 +144,26 @@ export function MiniPlayer() {
         title={expanded ? 'Close music' : 'Music'}
         type="button"
       >
-        {expanded ? '✕' : '♪'}
+        {expanded ? '▾' : '♪'}
+
       </button>
 
       {/* Expanded player */}
       <div className={`mini-player ${expanded ? 'show' : ''}`} aria-hidden={!expanded}>
         <div className="mini-player__top">
           <div className="mini-player__heading">
-            <div className="mini-player__title">Focus Beats</div>
-            <div className="mini-player__sub">keeps playing until paused ✨</div>
+            <div className="mini-player__title">Now Playing</div>
           </div>
 
           <button className="mini-player__play" onClick={toggle} aria-label="Play or pause" type="button">
             {playing ? '⏸' : '▶'}
           </button>
         </div>
+        <div className="mini-player__sub">
+  {tracks.find(t => t.src === trackSrc)?.label}
+</div>
+
+
 
         <div className="mini-player__row">
           <label className="mini-player__label">
@@ -142,6 +182,23 @@ export function MiniPlayer() {
             </select>
           </label>
         </div>
+        <div className="mini-player__progress">
+  <span className="mini-player__time">{fmt(currentTime)}</span>
+
+  <input
+    className="mini-player__scrub"
+    type="range"
+    min={0}
+    max={duration || 0}
+    step={0.1}
+    value={Math.min(currentTime, duration || 0)}
+    onChange={(e) => seekTo(Number(e.target.value))}
+    aria-label="Song progress"
+  />
+
+  <span className="mini-player__time">{fmt(duration)}</span>
+</div>
+
 
         <div className="mini-player__row mini-player__row--vol">
           <span className="mini-player__vol-icon">🔊</span>
