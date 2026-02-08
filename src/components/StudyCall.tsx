@@ -1,45 +1,81 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { DailyProvider, useCallObject, useParticipantIds, useVideoTrack } from '@daily-co/daily-react'
+import DailyIframe from '@daily-co/daily-js'
 import './StudyCall.css'
 
 const DEMO_ROOM_URL = 'https://flowstate.daily.co/Study'
 
+function VideoTile({ participantId }: { participantId: string }) {
+  const videoTrack = useVideoTrack(participantId)
+  
+  return (
+    <div className="video-tile">
+      {videoTrack.track ? (
+        <video 
+          autoPlay muted playsInline 
+          ref={(el) => { if (el && videoTrack.track) el.srcObject = new MediaStream([videoTrack.track]) }}
+        />
+      ) : (
+        <div className="video-tile__placeholder">Loading...</div>
+      )}
+      <div className="video-tile__name">{participantId === 'local' ? 'You' : 'Peer'}</div>
+    </div>
+  )
+}
 
+function CallContent() {
+  const callObject = useCallObject()
+  const participantIds = useParticipantIds()
+
+  useEffect(() => {
+    if (!callObject) return
+    callObject.join({ url: DEMO_ROOM_URL }).catch(console.error)
+    return () => { callObject.leave() }
+  }, [callObject])
+
+  return (
+    <div className="study-video-grid">
+      {participantIds.map((id) => (
+        <VideoTile key={id} participantId={id} />
+      ))}
+      {participantIds.length === 0 && <p className="waiting-text">Connecting...</p>}
+    </div>
+  )
+}
 
 export function StudyCall() {
   const [inCall, setInCall] = useState(false)
-  const [callObject, setCallObject] = useState&lt;ReturnType&lt;typeof DailyIframe.createCallObject&gt; | null&gt;(null)
+  const [callObject, setCallObject] = useState<ReturnType<typeof DailyIframe.createCallObject> | null>(null)
 
-  const startCall = () =&gt; {
+  const startCall = () => {
     const newCallObject = DailyIframe.createCallObject()
     setCallObject(newCallObject)
     setInCall(true)
   }
 
-  const leaveCall = () =&gt; {
+  const leaveCall = () => {
     callObject?.destroy()
     setCallObject(null)
     setInCall(false)
   }
 
-  if (inCall) {
+  if (inCall && callObject) {
     return (
-      &lt;div className="study-call study-call--active"&gt;
-        &lt;iframe
-          src={DEMO_ROOM_URL}
-          allow="camera; microphone; fullscreen; speaker; display-capture"
-          className="study-call__iframe"
-        /&gt;
-        &lt;button className="study-call__leave" onClick={leaveCall}&gt;Leave call&lt;/button&gt;
-      &lt;/div&gt;
+      <DailyProvider callObject={callObject}>
+        <div className="study-call study-call--active">
+          <CallContent />
+          <button className="study-call__leave" onClick={leaveCall}>Leave call</button>
+        </div>
+      </DailyProvider>
     )
   }
 
   return (
-    &lt;div className="study-call"&gt;
-      &lt;div className="study-call__card"&gt;
-        &lt;h2 className="study-call__title"&gt;Study call&lt;/h2&gt;
-        &lt;button className="study-call__join" onClick={startCall}&gt;Join call&lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+    <div className="study-call">
+      <div className="study-call__card">
+        <h2 className="study-call__title">Study call</h2>
+        <button className="study-call__join" onClick={startCall}>Join call</button>
+      </div>
+    </div>
   )
 }
