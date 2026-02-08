@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { PointsProvider, usePoints } from './context/PointsContext'
+import { TimerProvider } from './context/TimerContext' // Import new provider
 import { HomeLanding } from './components/HomeLanding'
 import { PomodoroTimer } from './components/PomodoroTimer'
+import { MiniTimer } from './components/MiniTimer' // Import MiniTimer
 import { Checklist } from './components/Checklist'
 import { StudyCall } from './components/StudyCall'
 import { Store } from './components/Store'
@@ -10,12 +12,10 @@ import { Character } from './components/Character'
 import type { TabId } from './types'
 
 function AppContent() {
-  // Use a history stack to track navigation (e.g., ['home', 'pomodoro', 'store'])
   const [history, setHistory] = useState<TabId[]>(['home'])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { profile } = usePoints()
 
-  // The active tab is always the last item in the history stack
   const activeTab = history[history.length - 1]
 
   const tabs: { id: TabId; label: string; icon: string }[] = [
@@ -28,7 +28,6 @@ function AppContent() {
     { id: 'character', label: 'Character', icon: '✨' },
   ]
 
-  // Navigate to a new tab by adding it to the history stack
   const navigate = (tabId: TabId) => {
     if (activeTab === tabId) {
       setSidebarOpen(false)
@@ -38,7 +37,6 @@ function AppContent() {
     setSidebarOpen(false)
   }
 
-  // Go back to the previous tab by removing the current one
   const goBack = () => {
     setHistory((prev) => {
       if (prev.length <= 1) return prev
@@ -46,7 +44,6 @@ function AppContent() {
     })
   }
 
-  // Reset navigation to Home
   const goHome = () => {
     setHistory(['home'])
     setSidebarOpen(false)
@@ -61,7 +58,6 @@ function AppContent() {
       </div>
 
       <header className="header">
-        {/* Group Menu and Back button together */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <button
             className="header__menu"
@@ -71,7 +67,6 @@ function AppContent() {
             ☰
           </button>
 
-          {/* Show Back button only if we are not at the start */}
           {history.length > 1 && (
             <button
               className="header__menu"
@@ -140,6 +135,11 @@ function AppContent() {
         {activeTab === 'leaderboard' && <Leaderboard />}
         {activeTab === 'character' && <Character />}
       </main>
+
+      {/* Show Mini Timer on all pages EXCEPT the main Pomodoro page */}
+      {activeTab !== 'pomodoro' && (
+        <MiniTimer onExpand={() => navigate('pomodoro')} />
+      )}
     </>
   )
 }
@@ -147,7 +147,9 @@ function AppContent() {
 export default function App() {
   return (
     <PointsProvider>
-      <AppContent />
+      <TimerProvider>
+        <AppContent />
+      </TimerProvider>
     </PointsProvider>
   )
 }
