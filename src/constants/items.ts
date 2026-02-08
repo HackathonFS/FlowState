@@ -21,6 +21,16 @@ export const ACCESSORIES = [
   { id: 'coin', name: 'Coin', cost: 45, image: '/accessory_coin.png' },
   { id: 'chicken', name: 'Chicken', cost: 55, image: '/accessory_chicken.png' },
   { id: 'bonsai', name: 'Bonsai', cost: 70, image: '/accessory_bonsai.png' },
+  { id: 'cat', name: 'Cat', cost: 50, image: '/accessory_cat.png' },
+  { id: 'diamond', name: 'Diamond', cost: 65, image: '/accessory_diamond.png' },
+  { id: 'exclamation', name: 'Exclamation', cost: 35, image: '/accessory_exclamation.png' },
+  { id: 'fivehearts', name: 'Five Hearts', cost: 55, image: '/accessory_fivehearts.png' },
+  { id: 'healthbar', name: 'Health Bar', cost: 45, image: '/accessory_healthbar.png' },
+  { id: 'musicnotes', name: 'Music Notes', cost: 40, image: '/accessory_musicnotes.png' },
+  { id: 'question', name: 'Question', cost: 35, image: '/accessory_question.png' },
+  { id: 'stickynote', name: 'Sticky Note', cost: 30, image: '/accessory_stickynote.png' },
+  { id: 'trophy', name: 'Trophy', cost: 75, image: '/accessory_trophy.png' },
+  { id: 'witchhat', name: 'Witch Hat', cost: 60, image: '/accessory_witchhat.png' },
 ] as const
 
 export const NAMETAGS = [

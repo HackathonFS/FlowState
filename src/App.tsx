@@ -9,6 +9,7 @@ import { StudyCall } from './components/StudyCall'
 import { Store } from './components/Store'
 import { Leaderboard } from './components/Leaderboard'
 import { Character } from './components/Character'
+import { CharacterDisplay } from './components/CharacterDisplay'
 import type { TabId } from './types'
 import { MiniPlayer } from './components/MiniPlayer'
 
@@ -100,6 +101,12 @@ function AppContent() {
         </div>
 
         <div className="header__points">
+          <CharacterDisplay
+            characterId={profile.characterId}
+            equippedAccessories={profile.equippedAccessories}
+            scale={0.28}
+            className="header__avatar"
+          />
           <span className="header__points-value">{profile.points}</span>
           <span className="header__points-label">points</span>
         </div>

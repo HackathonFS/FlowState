@@ -160,12 +160,16 @@ input, textarea {
 .header__points {
   margin-left: auto;
   display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  padding: 0.45rem 0.9rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.5rem;
   border: 3px solid var(--border);
   background: var(--bg-elevated);
   box-shadow: 3px 3px 0 var(--bg-deepest);
+}
+
+.header__points .header__avatar {
+  flex-shrink: 0;
 }
 
 .header__points-label::before {
