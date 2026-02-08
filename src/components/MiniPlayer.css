@@ -1,0 +1,122 @@
+/* Tiny bubble always visible (bottom-left) */
+.music-bubble {
+  position: fixed;
+  left: 14px;
+  bottom: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  z-index: 90;
+
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  color: var(--text);
+  font-size: 1.35rem;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* subtle “playing” indicator without changing your whole theme */
+.music-bubble.is-playing {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+/* Expanded panel */
+.mini-player {
+  position: fixed;
+  left: 14px;
+  bottom: 70px;
+  width: 270px;
+  max-width: 88vw;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  padding: 0.85rem;
+  z-index: 90;
+  display: none;
+}
+
+.mini-player.show {
+  display: block;
+}
+
+.mini-player__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.mini-player__heading {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.mini-player__title {
+  font-size: 1.15rem;
+}
+
+.mini-player__sub {
+  opacity: 0.8;
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+}
+
+.mini-player__play {
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.mini-player__row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.mini-player__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.6rem;
+}
+
+.mini-player__select {
+  flex: 1;
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 2px solid var(--border);
+  padding: 0.35rem;
+}
+
+.mini-player__vol-icon {
+  font-size: 1.1rem;
+}
+
+.mini-player__slider {
+  flex: 1;
+  accent-color: var(--text);
+}
+
+/* Mobile: slightly smaller so it doesn't block UI */
+@media (max-width: 520px) {
+  .mini-player {
+    width: 235px;
+    left: 10px;
+    bottom: 66px;
+  }
+
+  .music-bubble {
+    left: 10px;
+    bottom: 10px;
+  }
+}
