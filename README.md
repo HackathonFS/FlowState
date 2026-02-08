@@ -99,3 +99,9 @@ To build the app for production:
 npm run build
 npm run preview
 Data is stored in the browser (localStorage). No backend required for the current version.
+```
+Contributers:
+Kiara Nelson
+Destiny Ngigi
+Sudhiksha Sadige
+Thrisha Duggisetty
