@@ -1,5 +1,12 @@
 .study-call {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 160px);
   padding: 1.5rem;
+  box-sizing: border-box;
   position: relative;
   z-index: 1;
 }
@@ -7,27 +14,37 @@
 .study-call__card {
   background: var(--bg-card);
   border: 3px solid var(--border);
-  padding: 2rem;
+  padding: 2.5rem 3rem;
   max-width: 480px;
-  margin: 0 auto;
+  width: 100%;
+  text-align: center;
   box-shadow: 6px 6px 0 var(--dusty-grape);
 }
 
 .study-call__title {
-  margin: 0 0 1.5rem;
+  margin: 0 0 0.75rem;
   font-family: var(--font-pixel-head);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text);
 }
 
+.study-call__desc {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-pixel-body);
+  font-size: 0.95rem;
+  color: var(--text);
+  opacity: 0.75;
+}
+
 .study-call__join {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   border: 3px solid var(--pink-orchid);
   background: var(--pink-orchid-3);
   color: var(--dusty-grape);
   font-family: var(--font-pixel-body);
   font-size: 1.15rem;
+  cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s;
   box-shadow: 4px 4px 0 var(--dusty-grape);
 }
@@ -37,52 +54,12 @@
   transform: translate(2px, 2px);
 }
 
-.study-call--active {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.study-video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.video-tile {
-  position: relative;
+.study-call__video-wrap {
   width: 100%;
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  background: #2d2045;
+  max-width: 960px;
+  height: 70vh;
   border: 3px solid var(--border);
+  border-radius: 8px;
+  background: #1a1228;
   overflow: hidden;
-}
-
-.video-tile video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.video-tile__name {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-  background: rgba(0,0,0,0.6);
-  padding: 2px 6px;
-  color: white;
-  font-size: 0.8rem;
-}
-
-.study-call__leave {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text);
-  font-family: var(--font-pixel-body);
-  font-size: 1rem;
 }
