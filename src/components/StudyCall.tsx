@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { JitsiMeeting } from '@jitsi/react-sdk'
+import type { TabId } from '../types'
 import './StudyCall.css'
 
 type ViewState = 'menu' | 'input-link' | 'input-subject' | 'input-task' | 'call'
 
-export function StudyCall() {
+type StudyCallProps = {
+  onNavigate: (tab: TabId) => void
+}
+
+export function StudyCall({ onNavigate }: StudyCallProps) {
   const [view, setView] = useState<ViewState>('menu')
   const [roomName, setRoomName] = useState('')
   const [inputValue, setInputValue] = useState('')
@@ -19,13 +24,13 @@ export function StudyCall() {
   // --- Menu Actions ---
 
   const handleIndependent = () => {
-    // "Silent Library" style room
-    startCall('FlowState-Independent-Study')
+    // Redirect to the internal Pomodoro Timer page
+    onNavigate('pomodoro')
   }
 
   const handleCommunity = () => {
-    // The main general room
-    startCall('FlowState-Community-General')
+    // The main general room mapped to Community
+    startCall('Community')
   }
 
   const handleSubject = () => {
@@ -34,8 +39,8 @@ export function StudyCall() {
   }
 
   const handleTask = () => {
-    setInputValue('')
-    setView('input-task')
+    // Redirects "Similar Tasks" directly to the Community call
+    startCall('Community')
   }
 
   const handleCreateNew = () => {
@@ -53,7 +58,8 @@ export function StudyCall() {
   const submitSubject = (e: React.FormEvent) => {
     e.preventDefault()
     if (!inputValue.trim()) return
-    startCall(`FlowState-Subject-${inputValue.trim()}`)
+    // Direct link to the subject name (e.g. Math -> https://meet.jit.si/Math)
+    startCall(inputValue.trim())
   }
 
   const submitTask = (e: React.FormEvent) => {
@@ -91,16 +97,16 @@ export function StudyCall() {
             <p className="study-call__category-label">Meeting categories</p>
             <div className="study-call__categories">
               <button className="study-call__btn primary" onClick={handleCommunity}>
-                👥 Study as a Community
+                則 Study as a Community
               </button>
               <button className="study-call__btn" onClick={handleIndependent}>
-                🤫 Independent Study (Silent)
+                ､ｫ Independent Study (Silent)
               </button>
               <button className="study-call__btn" onClick={handleSubject}>
-                📚 Specific Subject...
+                答 Specific Subject...
               </button>
               <button className="study-call__btn" onClick={handleTask}>
-                ⚡ Similar Tasks...
+                笞｡ Similar Tasks...
               </button>
             </div>
 
@@ -111,7 +117,7 @@ export function StudyCall() {
                 + Create New
               </button>
               <button className="study-call__btn small" onClick={handleJoinViaLink}>
-                🔗 Join Link
+                迫 Join Link
               </button>
             </div>
           </div>
@@ -140,7 +146,7 @@ export function StudyCall() {
         </div>
       )}
 
-      {/* Input View: Similar Tasks */}
+      {/* Input View: Similar Tasks (Unused logic, but kept for UI consistency) */}
       {view === 'input-task' && (
         <div className="study-call__card">
           <h2 className="study-call__title">Similar Tasks</h2>

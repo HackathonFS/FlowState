@@ -134,7 +134,7 @@ function AppContent() {
         )}
         {activeTab === 'pomodoro' && <PomodoroTimer />}
         {activeTab === 'checklist' && <Checklist />}
-        {activeTab === 'studycall' && <StudyCall />}
+        {activeTab === 'studycall' && <StudyCall onNavigate={navigate} />}
         {activeTab === 'store' && <Store />}
         {activeTab === 'leaderboard' && <Leaderboard />}
         {activeTab === 'character' && <Character />}
