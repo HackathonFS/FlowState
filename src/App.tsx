@@ -10,6 +10,8 @@ import { Store } from './components/Store'
 import { Leaderboard } from './components/Leaderboard'
 import { Character } from './components/Character'
 import type { TabId } from './types'
+import { MiniPlayer } from './components/MiniPlayer'
+
 
 function AppContent() {
   const [history, setHistory] = useState<TabId[]>(['home'])
@@ -135,6 +137,9 @@ function AppContent() {
         {activeTab === 'leaderboard' && <Leaderboard />}
         {activeTab === 'character' && <Character />}
       </main>
+      
+      <MiniPlayer />
+
 
       {/* Show Mini Timer on all pages EXCEPT the main Pomodoro page */}
       {activeTab !== 'pomodoro' && (
