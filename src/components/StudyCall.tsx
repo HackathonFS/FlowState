@@ -18,8 +18,7 @@ export function StudyCall() {
       ) : (
         <div className="study-call__video-wrap">
           <JitsiMeeting
-            // Unique room name - change this if you want different rooms
-            roomName="FlowStateHackathonGlobalRoom"
+            roomName="StudyCall"
             configOverwrite={{
               startWithAudioMuted: true,
               disableThirdPartyRequests: true,
@@ -59,7 +58,6 @@ export function StudyCall() {
               iframeRef.style.height = '100%'
             }}
             onApiReady={(externalApi) => {
-              // You can attach custom event listeners here
               externalApi.addEventListener('videoConferenceLeft', () => {
                 setInCall(false)
               })
