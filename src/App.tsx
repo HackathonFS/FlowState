@@ -11,6 +11,7 @@ import type { TabId } from './types'
 
 function AppContent() {
   const [tab, setTab] = useState<TabId>('home')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { profile } = usePoints()
 
   const tabs: { id: TabId; label: string; icon: string }[] = [
@@ -30,33 +31,64 @@ function AppContent() {
         <div className="orb orb-2" />
         <div className="orb orb-3" />
       </div>
+
       <header className="header">
+        {/* NEW: hamburger button */}
+        <button
+          className="header__menu"
+          aria-label="Open menu"
+          onClick={() => setSidebarOpen(true)}
+        >
+          ☰
+        </button>
+
+        {/* unchanged logo */}
         <div className="header__brand">
           <img
             src="/flowstateicon.png"
             alt="Flow State"
             className="header__logo-img"
-            onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.add('header__logo-fallback--show'); }}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'
+              e.currentTarget.nextElementSibling?.classList.add('header__logo-fallback--show')
+            }}
           />
           <span className="header__logo-fallback">Flow State</span>
         </div>
+
         <div className="header__points">
           <span className="header__points-value">{profile.points}</span>
           <span className="header__points-label">points</span>
         </div>
       </header>
-      <nav className="nav">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            className={`nav__item ${tab === t.id ? 'active' : ''}`}
-            onClick={() => setTab(t.id)}
-          >
-            <span className="nav__icon">{t.icon}</span>
-            <span className="nav__label">{t.label}</span>
-          </button>
-        ))}
-      </nav>
+
+      {/* NEW: sidebar */}
+      {sidebarOpen && (
+        <button
+          className="sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          aria-label="Close menu"
+        />
+      )}
+
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <nav className="nav nav--sidebar">
+          {tabs.map((t) => (
+            <button
+              key={t.id}
+              className={`nav__item ${tab === t.id ? 'active' : ''}`}
+              onClick={() => {
+                setTab(t.id)
+                setSidebarOpen(false)
+              }}
+            >
+              <span className="nav__icon">{t.icon}</span>
+              <span className="nav__label">{t.label}</span>
+            </button>
+          ))}
+        </nav>
+      </aside>
+
       <main className="main">
         {tab === 'home' && <HomeLanding onEnter={() => setTab('pomodoro')} />}
         {tab === 'pomodoro' && <PomodoroTimer />}
