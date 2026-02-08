@@ -97,16 +97,16 @@ export function StudyCall({ onNavigate }: StudyCallProps) {
             <p className="study-call__category-label">Meeting categories</p>
             <div className="study-call__categories">
               <button className="study-call__btn primary" onClick={handleCommunity}>
-                則 Study as a Community
+                𖠋𖠋 Study as a Community
               </button>
               <button className="study-call__btn" onClick={handleIndependent}>
-                ､ｫ Independent Study (Silent)
+                𐀪 Independent Study (Silent)
               </button>
               <button className="study-call__btn" onClick={handleSubject}>
-                答 Specific Subject...
+                ✎ᝰ. Specific Subject...
               </button>
               <button className="study-call__btn" onClick={handleTask}>
-                笞｡ Similar Tasks...
+                ✔ Similar Tasks...
               </button>
             </div>
 
@@ -117,7 +117,7 @@ export function StudyCall({ onNavigate }: StudyCallProps) {
                 + Create New
               </button>
               <button className="study-call__btn small" onClick={handleJoinViaLink}>
-                迫 Join Link
+                Join Link
               </button>
             </div>
           </div>
@@ -146,7 +146,7 @@ export function StudyCall({ onNavigate }: StudyCallProps) {
         </div>
       )}
 
-      {/* Input View: Similar Tasks (Unused logic, but kept for UI consistency) */}
+      {/* Input View: Similar Tasks */}
       {view === 'input-task' && (
         <div className="study-call__card">
           <h2 className="study-call__title">Similar Tasks</h2>
