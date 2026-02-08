@@ -43,6 +43,13 @@
   width: 100%;
 }
 
+.study-call__divider {
+  height: 2px;
+  background: var(--border);
+  margin: 0.5rem 0;
+  opacity: 0.5;
+}
+
 .study-call__btn {
   width: 100%;
   padding: 0.85rem 1rem;
@@ -54,6 +61,10 @@
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
   box-shadow: 3px 3px 0 var(--dusty-grape);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .study-call__btn:hover {
@@ -76,7 +87,8 @@
 
 .study-call__btn.small {
   padding: 0.6rem 1rem;
-  font-size: 1.05rem;
+  font-size: 1rem;
+  flex: 1; /* Allows buttons to share space if in a flex row */
 }
 
 .study-call__form {
@@ -109,6 +121,7 @@
 .study-call__actions {
   display: flex;
   gap: 1rem;
+  width: 100%;
 }
 
 .study-call__video-wrap {

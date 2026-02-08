@@ -2,73 +2,171 @@ import React, { useState } from 'react'
 import { JitsiMeeting } from '@jitsi/react-sdk'
 import './StudyCall.css'
 
+type ViewState = 'menu' | 'input-link' | 'input-subject' | 'input-task' | 'call'
+
 export function StudyCall() {
-  const [view, setView] = useState<'menu' | 'input' | 'call'>('menu')
+  const [view, setView] = useState<ViewState>('menu')
   const [roomName, setRoomName] = useState('')
   const [inputValue, setInputValue] = useState('')
 
   const startCall = (name: string) => {
-    setRoomName(name)
+    // Sanitize room name to be URL-safe (replace spaces with dashes)
+    const safeName = name.replace(/\s+/g, '-')
+    setRoomName(safeName)
     setView('call')
   }
 
-  const handleJoinGlobal = () => {
-    startCall('StudyCall')
+  // --- Menu Actions ---
+
+  const handleIndependent = () => {
+    // "Silent Library" style room
+    startCall('FlowState-Independent-Study')
+  }
+
+  const handleCommunity = () => {
+    // The main general room
+    startCall('FlowState-Community-General')
+  }
+
+  const handleSubject = () => {
+    setInputValue('')
+    setView('input-subject')
+  }
+
+  const handleTask = () => {
+    setInputValue('')
+    setView('input-task')
   }
 
   const handleCreateNew = () => {
-    // Generate a random room ID
     const randomId = Math.random().toString(36).substring(2, 9)
-    startCall(`FlowState-${randomId}`)
+    startCall(`FlowState-Room-${randomId}`)
   }
 
   const handleJoinViaLink = () => {
-    setView('input')
     setInputValue('')
+    setView('input-link')
+  }
+
+  // --- Form Submissions ---
+
+  const submitSubject = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!inputValue.trim()) return
+    startCall(`FlowState-Subject-${inputValue.trim()}`)
+  }
+
+  const submitTask = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!inputValue.trim()) return
+    startCall(`FlowState-Task-${inputValue.trim()}`)
   }
 
   const submitLink = (e: React.FormEvent) => {
     e.preventDefault()
     if (!inputValue.trim()) return
 
-    // Extract room name if user pasted a full URL (e.g., https://meet.jit.si/RoomName)
     let name = inputValue.trim()
     try {
+      // If user pasted a full URL, extract the room name
       const url = new URL(name)
       const path = url.pathname.split('/').filter(Boolean).pop()
       if (path) name = path
     } catch (_) {
-      // Not a URL, use the text as is
+      // Not a URL, use text as is
     }
     startCall(name)
   }
+
+  const goBack = () => setView('menu')
 
   return (
     <div className="study-call">
       {view === 'menu' && (
         <div className="study-call__card">
           <h2 className="study-call__title">Study Together</h2>
-          <p className="study-call__desc">Choose how you want to study</p>
+          <p className="study-call__desc">Select a category to join a pod</p>
           
           <div className="study-call__menu">
-            <button className="study-call__btn primary" onClick={handleJoinGlobal}>
-              Join Global Room
+            {/* Main Categories */}
+            <button className="study-call__btn primary" onClick={handleCommunity}>
+              👥 Study as a Community
             </button>
-            <button className="study-call__btn" onClick={handleCreateNew}>
-              Create New Meeting
+            <button className="study-call__btn" onClick={handleIndependent}>
+              🤫 Independent Study (Silent)
             </button>
-            <button className="study-call__btn" onClick={handleJoinViaLink}>
-              Join with Link
+            <button className="study-call__btn" onClick={handleSubject}>
+              📚 Specific Subject...
             </button>
+            <button className="study-call__btn" onClick={handleTask}>
+              ⚡ Similar Tasks...
+            </button>
+
+            {/* Divider */}
+            <div className="study-call__divider" />
+            
+            {/* Utilities */}
+            <div className="study-call__actions">
+                <button className="study-call__btn small" onClick={handleCreateNew}>
+                + Create New
+                </button>
+                <button className="study-call__btn small" onClick={handleJoinViaLink}>
+                🔗 Join Link
+                </button>
+            </div>
           </div>
         </div>
       )}
 
-      {view === 'input' && (
+      {/* Input View: Specific Subject */}
+      {view === 'input-subject' && (
         <div className="study-call__card">
-          <h2 className="study-call__title">Join Meeting</h2>
-          <p className="study-call__desc">Paste a Jitsi link or enter a room name</p>
-          
+          <h2 className="study-call__title">Specific Subject</h2>
+          <p className="study-call__desc">What subject are you studying?</p>
+          <form onSubmit={submitSubject} className="study-call__form">
+            <input
+              className="study-call__input"
+              type="text"
+              placeholder="e.g. Math, History, Physics"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              autoFocus
+            />
+            <div className="study-call__actions">
+              <button type="button" className="study-call__btn small" onClick={goBack}>Back</button>
+              <button type="submit" className="study-call__btn primary small">Join Room</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Input View: Similar Tasks */}
+      {view === 'input-task' && (
+        <div className="study-call__card">
+          <h2 className="study-call__title">Similar Tasks</h2>
+          <p className="study-call__desc">What kind of task are you doing?</p>
+          <form onSubmit={submitTask} className="study-call__form">
+            <input
+              className="study-call__input"
+              type="text"
+              placeholder="e.g. Coding, Writing, Reading"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              autoFocus
+            />
+            <div className="study-call__actions">
+              <button type="button" className="study-call__btn small" onClick={goBack}>Back</button>
+              <button type="submit" className="study-call__btn primary small">Find Pod</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Input View: Link */}
+      {view === 'input-link' && (
+        <div className="study-call__card">
+          <h2 className="study-call__title">Join with Link</h2>
+          <p className="study-call__desc">Paste a Jitsi link or room name</p>
           <form onSubmit={submitLink} className="study-call__form">
             <input
               className="study-call__input"
@@ -79,17 +177,14 @@ export function StudyCall() {
               autoFocus
             />
             <div className="study-call__actions">
-              <button type="button" className="study-call__btn small" onClick={() => setView('menu')}>
-                Back
-              </button>
-              <button type="submit" className="study-call__btn primary small">
-                Join
-              </button>
+              <button type="button" className="study-call__btn small" onClick={goBack}>Back</button>
+              <button type="submit" className="study-call__btn primary small">Join</button>
             </div>
           </form>
         </div>
       )}
 
+      {/* Active Call View */}
       {view === 'call' && (
         <div className="study-call__video-wrap">
           <JitsiMeeting
