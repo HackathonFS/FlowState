@@ -1,77 +1,125 @@
 import React, { useState } from 'react'
-import { PomodoroTimer } from './PomodoroTimer'
+import { JitsiMeeting } from '@jitsi/react-sdk'
 import './StudyCall.css'
 
-export type CallCategory = 'independent' | 'community' | 'subject' | 'similar'
-
-const CALL_CATEGORIES: { id: CallCategory; label: string; desc: string; icon: string }[] = [
-  { id: 'independent', label: 'Independent study', desc: 'Quiet focus, everyone on their own', icon: '🔇' },
-  { id: 'community', label: 'Study as community', desc: 'Collaborate and chat while studying', icon: '👥' },
-  { id: 'subject', label: 'Specific subject', desc: 'Math, CS, languages, etc.', icon: '📚' },
-  { id: 'similar', label: 'Similar tasks', desc: 'Same type of work (e.g. essays, coding)', icon: '📋' },
-]
-
 export function StudyCall() {
-  const [inCall, setInCall] = useState(false)
-  const [category, setCategory] = useState<CallCategory | null>(null)
+  const [view, setView] = useState<'menu' | 'input' | 'call'>('menu')
+  const [roomName, setRoomName] = useState('')
+  const [inputValue, setInputValue] = useState('')
 
-  const startCall = (c: CallCategory) => {
-    setCategory(c)
-    setInCall(true)
+  const startCall = (name: string) => {
+    setRoomName(name)
+    setView('call')
   }
 
-  if (inCall && category) {
-    return (
-      <div className="study-call study-call--active">
-        <div className="study-call__layout">
-          <aside className="study-call__sidebar">
-            <div className="study-call__category-badge">
-              {CALL_CATEGORIES.find((x) => x.id === category)?.icon} {CALL_CATEGORIES.find((x) => x.id === category)?.label}
-            </div>
-            <div className="study-call__pomodoro">
-              <PomodoroTimer />
-            </div>
-            <button
-              type="button"
-              className="study-call__leave"
-              onClick={() => { setInCall(false); setCategory(null); }}
-            >
-              Leave call
-            </button>
-          </aside>
-          <section className="study-call__video">
-            <div className="study-call__video-placeholder">
-              <p>Video area</p>
-              <p className="study-call__video-hint">(Your face / peers will appear here)</p>
-            </div>
-          </section>
-        </div>
-        <span className="study-call__sparkle">✦</span>
-      </div>
-    )
+  const handleJoinGlobal = () => {
+    startCall('StudyCall')
+  }
+
+  const handleCreateNew = () => {
+    // Generate a random room ID
+    const randomId = Math.random().toString(36).substring(2, 9)
+    startCall(`FlowState-${randomId}`)
+  }
+
+  const handleJoinViaLink = () => {
+    setView('input')
+    setInputValue('')
+  }
+
+  const submitLink = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!inputValue.trim()) return
+
+    // Extract room name if user pasted a full URL (e.g., https://meet.jit.si/RoomName)
+    let name = inputValue.trim()
+    try {
+      const url = new URL(name)
+      const path = url.pathname.split('/').filter(Boolean).pop()
+      if (path) name = path
+    } catch (_) {
+      // Not a URL, use the text as is
+    }
+    startCall(name)
   }
 
   return (
     <div className="study-call">
-      <div className="study-call__card">
-        <h2 className="study-call__title">Study call</h2>
-        <p className="study-call__sub">Video call with shared Pomodoro. Pick a category.</p>
-        <ul className="study-call__categories">
-          {CALL_CATEGORIES.map((c) => (
-            <li key={c.id} className="study-call__category">
-              <button
-                type="button"
-                className="study-call__category-btn"
-                onClick={() => startCall(c.id)}
-              >
-                <span className="study-call__category-icon">{c.icon}</span>
-                <span className="study-call__category-label">{c.label}</span>
-                <span className="study-call__category-desc">{c.desc}</span>
+      {view === 'menu' && (
+        <div className="study-call__card">
+          <h2 className="study-call__title">Study Together</h2>
+          <p className="study-call__desc">Choose how you want to study</p>
+          
+          <div className="study-call__menu">
+            <button className="study-call__btn primary" onClick={handleJoinGlobal}>
+              Join Global Room
+            </button>
+            <button className="study-call__btn" onClick={handleCreateNew}>
+              Create New Meeting
+            </button>
+            <button className="study-call__btn" onClick={handleJoinViaLink}>
+              Join with Link
+            </button>
+          </div>
+        </div>
+      )}
+
+      {view === 'input' && (
+        <div className="study-call__card">
+          <h2 className="study-call__title">Join Meeting</h2>
+          <p className="study-call__desc">Paste a Jitsi link or enter a room name</p>
+          
+          <form onSubmit={submitLink} className="study-call__form">
+            <input
+              className="study-call__input"
+              type="text"
+              placeholder="https://meet.jit.si/..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              autoFocus
+            />
+            <div className="study-call__actions">
+              <button type="button" className="study-call__btn small" onClick={() => setView('menu')}>
+                Back
               </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+              <button type="submit" className="study-call__btn primary small">
+                Join
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {view === 'call' && (
+        <div className="study-call__video-wrap">
+          <JitsiMeeting
+            roomName={roomName}
+            configOverwrite={{
+              startWithAudioMuted: true,
+              disableThirdPartyRequests: true,
+              prejoinPageEnabled: false,
+            }}
+            interfaceConfigOverwrite={{
+               TOOLBAR_BUTTONS: [
+                'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+                'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
+                'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
+                'videoquality', 'filmstrip', 'feedback', 'stats', 'shortcuts',
+                'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone', 'security'
+              ],
+            }}
+            getIFrameRef={(iframeRef) => {
+              iframeRef.style.height = '100%'
+            }}
+            onApiReady={(externalApi) => {
+              externalApi.addEventListener('videoConferenceLeft', () => {
+                setView('menu')
+                setRoomName('')
+              })
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }
