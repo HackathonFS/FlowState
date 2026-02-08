@@ -1,15 +1,15 @@
 /* User palette: lighter pinks, darker purples, starker contrast + gold accents */
 :root {
-  --pink-orchid: #F5D4F0;
-  --pink-orchid-2: #EFC6E8;
-  --pink-orchid-3: #E5B5D2;
+  --pink-orchid: #f1eee1;
+  --pink-orchid-2: rgb(224, 215, 168);
+  --pink-orchid-3: #ebc670;
   --lilac: #D19DC2;
-  --vintage-lavender: #9265A3;
-  --vintage-lavender-2: #7a4d8a;
-  --dusty-grape: #62488A;
-  --bg-deep: #3d2d5c;
-  --bg-deepest: #2d2045;
-  --bg-card: #5a3d6e;
+  --vintage-lavender: rgb(189, 144, 206);
+  --vintage-lavender-2: #6533af;
+  --dusty-grape: #410e8b;
+  --bg-deep: #281b43;
+  --bg-deepest: #0e0238;
+  --bg-card: #2a1d40;
   --bg-elevated: #6b4a7e;
   --accent: #E3A9C9;
   --accent-mid: #E5B5D2;
@@ -22,8 +22,8 @@
   --gold-glow: rgba(236, 202, 79, 0.5);
   --crown: #EFC6E8;
   --text: #F5D4F0;
-  --text-muted: #D19DC2;
-  --border: rgba(209, 157, 194, 0.45);
+  --text-muted: #fdb4ce;
+  --border: #d7a8ab;
   --font-pixel-head: 'Pixelify Sans', sans-serif;
   --font-pixel-body: 'VT323', monospace;
   --radius: 0;

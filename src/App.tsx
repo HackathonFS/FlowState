@@ -33,14 +33,13 @@ function AppContent() {
       <header className="header">
         <div className="header__brand">
           <img
-            src="/logo.png"
+            src="/flowstateicon.png"
             alt="Flow State"
             className="header__logo-img"
             onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.add('header__logo-fallback--show'); }}
           />
           <span className="header__logo-fallback">Flow State</span>
         </div>
-        <p className="header__tagline">Study & Productivity</p>
         <div className="header__points">
           <span className="header__points-value">{profile.points}</span>
           <span className="header__points-label">points</span>

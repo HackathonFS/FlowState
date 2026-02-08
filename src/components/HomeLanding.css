@@ -12,7 +12,7 @@
   position: absolute;
   inset: 0;
   background-color: var(--bg-deep);
-  background-image: url('/logo-landing.png');
+  background-image: url('/flowstatenewbg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -60,6 +60,7 @@
   font-size: 1.4rem;
   box-shadow: 4px 4px 0 var(--bg-deepest);
   transition: transform 0.1s, box-shadow 0.1s;
+  margin-top: 280%;
 }
 
 .landing__cta:hover {
